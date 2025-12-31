@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🍷 Wine Quality Prediction</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2e7d32;
+            --primary-light: #60ad5e;
+            --primary-dark: #005005;
+            --bg-dark: #121212;
+            --bg-card: #1e1e1e;
+            --text-light: #f5f5f5;
+            --text-muted: #b0bec5;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            line-height: 1.6;
+            padding: 20px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(46, 125, 50, 0.1) 0%, rgba(18, 18, 18, 0.9) 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: var(--bg-card);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        h1 {
+            text-align: center;
+            color: var(--primary-light);
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+            padding-bottom: 1rem;
+        }
+        
+        h1::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            border-radius: 3px;
+        }
+        
+        .input-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: var(--primary-light);
+            font-weight: 500;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #333;
+            border-radius: 8px;
+            background-color: #2a2a2a;
+            color: var(--text-light);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(46, 125, 50, 0.3);
+        }
+        
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 2rem 0;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(46, 125, 50, 0.4);
+        }
+        
+        button:active {
+            transform: translateY(0);
+        }
+        
+        #result {
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            background: rgba(46, 125, 50, 0.1);
+            border-left: 4px solid var(--primary);
+            transition: all 0.3s ease;
+            min-height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .wine-bottle {
+            text-align: center;
+            font-size: 3rem;
+            margin: 1rem 0;
+            opacity: 0.8;
+        }
+        
+        @media (min-width: 768px) {
+            .form-grid {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="wine-bottle">🍷</div>
+        <h1>Wine Quality Prediction</h1>
+
+        <div class="form-grid">
+            <div class="input-group">
+                <label for="fixed_acidity">Fixed Acidity (g/dm³)</label>
+                <input type="number" step="any" id="fixed_acidity" placeholder="Enter fixed acidity">
+            </div>
+            
+            <div class="input-group">
+                <label for="volatile_acidity">Volatile Acidity (g/dm³)</label>
+                <input type="number" step="any" id="volatile_acidity" placeholder="Enter volatile acidity">
+            </div>
+            
+            <div class="input-group">
+                <label for="citric_acid">Citric Acid (g/dm³)</label>
+                <input type="number" step="any" id="citric_acid" placeholder="Enter citric acid">
+            </div>
+            
+            <div class="input-group">
+                <label for="residual_sugar">Residual Sugar (g/dm³)</label>
+                <input type="number" step="any" id="residual_sugar" placeholder="Enter residual sugar">
+            </div>
+            
+            <div class="input-group">
+                <label for="chlorides">Chlorides (g/dm³)</label>
+                <input type="number" step="0.001" step="any" id="chlorides" placeholder="Enter chlorides">
+            </div>
+            
+            <div class="input-group">
+                <label for="free_sulfur_dioxide">Free SO₂ (mg/dm³)</label>
+                <input type="number" step="any" id="free_sulfur_dioxide" placeholder="Enter free SO₂">
+            </div>
+            
+            <div class="input-group">
+                <label for="total_sulfur_dioxide">Total SO₂ (mg/dm³)</label>
+                <input type="number" step="any" id="total_sulfur_dioxide" placeholder="Enter total SO₂">
+            </div>
+            
+            <div class="input-group">
+                <label for="density">Density (g/cm³)</label>
+                <input type="number" step="0.0001" id="density" placeholder="Enter density">
+            </div>
+            
+            <div class="input-group">
+                <label for="ph">pH Value</label>
+                <input type="number" step="0.01" id="ph" placeholder="Enter pH value">
+            </div>
+            
+            <div class="input-group">
+                <label for="sulphates">Sulphates (g/dm³)</label>
+                <input type="number" step="0.01" id="sulphates" placeholder="Enter sulphates">
+            </div>
+            
+            <div class="input-group">
+                <label for="alcohol">Alcohol (% by volume)</label>
+                <input type="number" step="0.1" id="alcohol" placeholder="Enter alcohol content">
+            </div>
+            
+            <div class="input-group">
+                <label for="model_type">Select Prediction Model</label>
+                <select id="model_type">
+                    <option value="logistic">Logistic Regression</option>
+                    <option value="tree">Decision Tree</option>
+                </select>
+            </div>
+        </div>
+
+        <button onclick="predict()">🍷 Predict Wine Quality</button>
+
+        <div id="result">Enter wine details and click predict to see results</div>
+
+    <script>
+        async function predict() {
+            // Get all input elements
+            const inputs = document.querySelectorAll('input[type="number"]');
+            let isValid = true;
+            
+            // Validate all inputs
+            inputs.forEach(input => {
+                if (input.value === '' || isNaN(parseFloat(input.value))) {
+                    input.style.borderColor = '#ff4444';
+                    isValid = false;
+                } else {
+                    input.style.borderColor = '#333';
+                }
+            });
+            
+            if (!isValid) {
+                document.getElementById('result').innerHTML = '❌ Please fill in all fields with valid numbers';
+                document.getElementById('result').style.color = '#ff6b6b';
+                return;
+            }
+            
+            const data = {
+                fixed_acidity: parseFloat(document.getElementById('fixed_acidity').value),
+                volatile_acidity: parseFloat(document.getElementById('volatile_acidity').value),
+                citric_acid: parseFloat(document.getElementById('citric_acid').value),
+                residual_sugar: parseFloat(document.getElementById('residual_sugar').value),
+                chlorides: parseFloat(document.getElementById('chlorides').value),
+                free_sulfur_dioxide: parseFloat(document.getElementById('free_sulfur_dioxide').value),
+                total_sulfur_dioxide: parseFloat(document.getElementById('total_sulfur_dioxide').value),
+                density: parseFloat(document.getElementById('density').value),
+                ph: parseFloat(document.getElementById('ph').value),
+                sulphates: parseFloat(document.getElementById('sulphates').value),
+                alcohol: parseFloat(document.getElementById('alcohol').value)
+            };
+
+            const model = document.getElementById('model_type').value;
+            const resultElement = document.getElementById('result');
+            
+            // Show loading state
+            resultElement.innerHTML = '<div class="loading">🔍 Analyzing wine parameters...</div>';
+            resultElement.style.color = '#4caf50';
+            
+            try {
+                const response = await fetch('http://127.0.0.1:8000/predict?model_type=' + model, {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(data)
+                });
+
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                
+                const result = await response.json();
+                
+                // Get the quality and emoji from the API response
+                const quality = result.quality || 'Unknown';
+                const emoji = result.emoji || '🍇';
+                
+                // Update the result display with detailed information
+                const qualityClass = result.quality.toLowerCase();
+                const qualityColor = {
+                    'excellent': '#4caf50',
+                    'average': '#ffc107',
+                    'poor': '#f44336'
+                }[qualityClass] || '#4caf50';
+                
+                // Create feature importance list if available
+                let featureList = '';
+                if (result.feature_importance && Object.keys(result.feature_importance).length > 0) {
+                    featureList = `
+                        <div style="margin-top: 20px; text-align: left;">
+                            <h3 style="color: var(--primary-light); margin-bottom: 10px;">Key Influencing Factors:</h3>
+                            <ul style="list-style: none; padding: 0;">
+                                ${Object.entries(result.feature_importance)
+                                    .sort((a, b) => Math.abs(b[1]) - Math.abs(a[0]))
+                                    .slice(0, 3)
+                                    .map(([feature, importance]) => {
+                                        const isPositive = importance > 0;
+                                        const emoji = isPositive ? '👍' : '👎';
+                                        const color = isPositive ? '#4caf50' : '#f44336';
+                                        return `
+                                            <li style="margin: 8px 0; padding: 8px; background: rgba(0,0,0,0.2); border-radius: 6px;">
+                                                <span style="font-weight: 500;">${feature}:</span>
+                                                <span style="color: ${color}; margin-left: 8px;">
+                                                    ${emoji} ${Math.abs(importance).toFixed(2)}
+                                                </span>
+                                            </li>`;
+                                    }).join('')}
+                            </ul>
+                        </div>`;
+                }
+                
+                resultElement.innerHTML = `
+                    <div style="font-size: 2rem; margin-bottom: 10px;">${result.emoji}</div>
+                    <div style="font-size: 1.8rem; font-weight: 700; margin-bottom: 5px; color: ${qualityColor};">
+                        ${result.quality} Quality
+                    </div>
+                    <div style="font-size: 1rem; color: var(--text-muted); margin-bottom: 15px;">
+                        Confidence: ${result.confidence.toFixed(1)}%
+                    </div>
+                    <div style="background: rgba(255,255,255,0.05); padding: 15px; border-radius: 8px; margin: 15px 0;">
+                        ${result.message}
+                    </div>
+                    ${featureList}
+                    <div style="margin-top: 20px; font-size: 0.85rem; color: var(--text-muted);">
+                        Using ${model === 'logistic' ? 'Logistic Regression' : 'Decision Tree'} model
+                    </div>
+                `;
+                
+            } catch (error) {
+                console.error('Error:', error);
+                resultElement.innerHTML = '❌ Error: Could not get prediction. Please try again.';
+                resultElement.style.color = '#ff6b6b';
+            }
+        }
+        
+        // Add input validation and better UX
+        document.addEventListener('DOMContentLoaded', () => {
+            const inputs = document.querySelectorAll('input[type="number"]');
+            
+            inputs.forEach(input => {
+                // Add focus effect
+                input.addEventListener('focus', (e) => {
+                    e.target.parentNode.style.transform = 'translateY(-2px)';
+                });
+                
+                // Remove focus effect
+                input.addEventListener('blur', (e) => {
+                    e.target.parentNode.style.transform = 'translateY(0)';
+                });
+                
+                // Validate on input
+                input.addEventListener('input', (e) => {
+                    if (e.target.value && !isNaN(parseFloat(e.target.value))) {
+                        e.target.style.borderColor = '#4caf50';
+                    } else {
+                        e.target.style.borderColor = '#333';
+                    }
+                });
+            });
+        });
+    </script>
+    <div style="text-align: center; margin-top: 2rem; color: var(--text-muted); font-size: 0.9rem;">
+        <p>🍷 Wine Quality Prediction System | Powered by Machine Learning</p>
+    </div>
+</div>
+</body>
+</html>
